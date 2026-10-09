@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Ufuk &amp; Gülin — 12. Yıl</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Pinyon Script";
+        src: url("assets/fonts/PinyonScript-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Josefin Sans";
+        src: url("assets/fonts/JosefinSans-Light.ttf") format("truetype");
+        font-weight: 300;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Josefin Sans";
+        src: url("assets/fonts/JosefinSans-SemiBold.ttf") format("truetype");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      :root {
+        --night: #150b0f;
+        --wine: #3d1520;
+        --ivory: #fbf2e4;
+        --gold: #e6c684;
+        --gold-deep: #c49a52;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--night);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--night);
+        color: var(--ivory);
+        font-family: "Josefin Sans", sans-serif;
+      }
+
+      /* ---------- shared atmosphere ---------- */
+      #bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 85% 55% at 50% 44%, #42182a 0%, #24101a 48%, var(--night) 100%);
+      }
+      .glow {
+        position: absolute;
+        left: 90px;
+        top: 360px;
+        width: 900px;
+        height: 900px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(230, 198, 132, 0.26) 0%, rgba(150, 60, 70, 0.14) 42%, rgba(0, 0, 0, 0) 70%);
+      }
+
+      /* ---------- typography ---------- */
+      .names {
+        font-family: "Pinyon Script", cursive;
+        font-weight: 400;
+        font-size: 158px;
+        line-height: 1.3;
+        color: var(--ivory);
+        letter-spacing: 0;
+        padding: 0 40px;
+        text-align: center;
+        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.45), 0 0 40px rgba(230, 198, 132, 0.18);
+      }
+      .forever {
+        font-family: "Pinyon Script", cursive;
+        font-size: 128px;
+        line-height: 1.3;
+        color: var(--gold);
+        padding: 0 40px;
+        text-align: center;
+        text-shadow: 0 0 36px rgba(230, 198, 132, 0.35);
+      }
+      .cap-gold {
+        font-weight: 600;
+        font-size: 42px;
+        letter-spacing: 0.3em;
+        color: var(--gold);
+        text-align: center;
+        padding-left: 0.3em;
+      }
+      .cap-ivory {
+        font-weight: 300;
+        font-size: 38px;
+        letter-spacing: 0.46em;
+        color: var(--ivory);
+        text-align: center;
+        padding-left: 0.46em;
+      }
+      .rule {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        width: 520px;
+        height: 24px;
+      }
+      .rule-line {
+        display: block;
+        width: 200px;
+        height: 3px;
+        background: var(--gold-deep);
+      }
+      .rule-diamond {
+        display: block;
+        width: 16px;
+        height: 16px;
+        border: 3px solid var(--gold);
+        rotate: 45deg;
+      }
+      .inf-line {
+        fill: none;
+        stroke: var(--gold);
+        stroke-width: 7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .inf-glint {
+        fill: none;
+        stroke: #fff7e6;
+        stroke-width: 9;
+        stroke-linecap: round;
+        opacity: 0;
+      }
+
+      /* ---------- intro ---------- */
+      #intro {
+        position: absolute;
+        inset: 0;
+      }
+      .intro-fade {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 26px;
+        padding-bottom: 60px;
+      }
+      #intro-inf {
+        display: block;
+        width: 700px;
+        height: 290px;
+        overflow: visible;
+        margin-bottom: 10px;
+      }
+      #intro .cap-ivory {
+        margin-top: -8px;
+      }
+
+      /* ---------- photos ---------- */
+      .photo {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .photo-fade {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        opacity: 0;
+      }
+      .photo-img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: block;
+        width: 1080px;
+        height: auto;
+      }
+      #leaks {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .leak {
+        position: absolute;
+        width: 1500px;
+        height: 1500px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 214, 150, 0.85) 0%, rgba(255, 150, 90, 0.38) 34%, rgba(255, 120, 80, 0) 68%);
+        mix-blend-mode: screen;
+        opacity: 0;
+      }
+      .leak:nth-child(odd) {
+        left: -700px;
+        top: -500px;
+      }
+      .leak:nth-child(even) {
+        left: 280px;
+        top: 900px;
+      }
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 75% 62% at 50% 48%, rgba(10, 4, 6, 0) 58%, rgba(10, 4, 6, 0.5) 100%);
+        pointer-events: none;
+      }
+
+      /* ---------- poetic lines ---------- */
+      .poem {
+        position: absolute;
+        inset: 0;
+      }
+      .poem-shade {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        height: 900px;
+        opacity: 0;
+      }
+      .poem-top .poem-shade {
+        top: 0;
+        background: linear-gradient(180deg, rgba(14, 6, 9, 0.72) 0%, rgba(14, 6, 9, 0.4) 50%, rgba(14, 6, 9, 0) 100%);
+      }
+      .poem-bottom .poem-shade {
+        bottom: 0;
+        background: linear-gradient(0deg, rgba(14, 6, 9, 0.78) 0%, rgba(14, 6, 9, 0.42) 50%, rgba(14, 6, 9, 0) 100%);
+      }
+      .poem-inner {
+        position: absolute;
+        left: 60px;
+        width: 960px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      .poem-top .poem-inner {
+        top: 250px;
+      }
+      .poem-bottom .poem-inner {
+        bottom: 370px;
+      }
+      .poem-text {
+        font-family: "Pinyon Script", cursive;
+        font-size: 104px;
+        line-height: 1.32;
+        color: var(--ivory);
+        text-align: center;
+        text-wrap: balance;
+        padding: 0 30px;
+        text-shadow: 0 3px 22px rgba(0, 0, 0, 0.7), 0 0 4px rgba(0, 0, 0, 0.35);
+      }
+      .poem-rule {
+        display: block;
+        width: 260px;
+        height: 3px;
+        background: var(--gold);
+      }
+
+      /* ---------- outro ---------- */
+      #outro {
+        position: absolute;
+        inset: 0;
+      }
+      .outro-fade {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        background: radial-gradient(ellipse 85% 55% at 50% 40%, #42182a 0%, #24101a 48%, var(--night) 100%);
+      }
+      #outro .glow {
+        top: 220px;
+      }
+      #loop-stage {
+        position: absolute;
+        left: 0;
+        top: 410px;
+        width: 1080px;
+        height: 520px;
+      }
+      #outro-inf {
+        position: absolute;
+        left: -20px;
+        top: 0;
+        width: 1120px;
+        height: 520px;
+        overflow: visible;
+      }
+      #thumbs {
+        position: absolute;
+        left: 540px;
+        top: 260px;
+        width: 0;
+        height: 0;
+      }
+      .thumb {
+        position: absolute;
+        left: -66px;
+        top: -66px;
+        width: 132px;
+        height: 132px;
+      }
+      .thumb-in {
+        width: 132px;
+        height: 132px;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border: 4px solid var(--gold);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55), 0 0 22px rgba(230, 198, 132, 0.3);
+        opacity: 0;
+      }
+      .outro-text {
+        position: absolute;
+        left: 0;
+        top: 990px;
+        width: 1080px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+      }
+      #outro-names {
+        margin-bottom: -26px;
+      }
+      #outro .rule {
+        margin-top: 12px;
+      }
+
+      #dust {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .mote {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+        background: #ffe9bd;
+        box-shadow: 0 0 10px 2px rgba(255, 214, 150, 0.6);
+      }
+      #fade-black {
+        position: absolute;
+        inset: 0;
+        background: #070304;
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="{{TOTAL}}"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="bg"></div>
+
+      <!-- AÇILIŞ: altın ∞, isimler, 12. yıl -->
+      <div id="intro" class="clip" data-start="0" data-duration="{{INTRO_DUR}}" data-track-index="0">
+        <div class="glow" id="intro-glow"></div>
+        <div class="intro-fade">
+          <svg id="intro-inf" viewBox="-350 -145 700 290" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="intro-soft" x="-20%" y="-40%" width="140%" height="180%">
+                <feGaussianBlur stdDeviation="5" result="b" />
+                <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            <path id="intro-inf-path" class="inf-line" filter="url(#intro-soft)" d="M0 0" />
+            <path id="intro-inf-glint" class="inf-glint" filter="url(#intro-soft)" d="M0 0" />
+          </svg>
+          <h1 class="names" id="intro-names">Ufuk &amp; Gülin</h1>
+          <div class="rule" id="intro-rule">
+            <span class="rule-line"></span><span class="rule-diamond"></span><span class="rule-line"></span>
+          </div>
+          <p class="cap-gold" id="intro-cap1">12. YIL DÖNÜMÜMÜZ</p>
+          <p class="cap-ivory" id="intro-cap2">KUTLU OLSUN</p>
+        </div>
+      </div>
+
+      <!-- 16 FOTOĞRAF: her geçiş müziğin bir ölçü başına denk gelir -->
+{{PHOTOS}}
+
+      <div id="leaks">
+{{LEAKS}}
+      </div>
+      <div id="vignette"></div>
+
+      <!-- Fotoğraf üzerindeki kısa satırlar -->
+{{LINES}}
+
+      <!-- KAPANIŞ: fotoğraflar ∞ üzerinde döner — sonsuzluğa -->
+      <div id="outro" class="clip" data-start="{{OUTRO_START}}" data-duration="{{OUTRO_DUR}}" data-track-index="4">
+        <div class="outro-fade">
+          <div class="glow" id="outro-glow"></div>
+          <div id="loop-stage">
+            <svg id="outro-inf" viewBox="-560 -260 1120 520" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="outro-soft" x="-20%" y="-40%" width="140%" height="180%">
+                  <feGaussianBlur stdDeviation="5" result="b" />
+                  <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+              </defs>
+              <path id="outro-inf-path" class="inf-line" filter="url(#outro-soft)" d="M0 0" />
+              <path id="outro-inf-glint" class="inf-glint" filter="url(#outro-soft)" d="M0 0" />
+            </svg>
+            <div id="thumbs">
+{{THUMBS}}
+            </div>
+          </div>
+          <div class="outro-text">
+            <h2 class="names" id="outro-names">Ufuk &amp; Gülin</h2>
+            <p class="forever" id="outro-forever">Sonsuzluğa…</p>
+            <div class="rule" id="outro-rule">
+              <span class="rule-line"></span><span class="rule-diamond"></span><span class="rule-line"></span>
+            </div>
+            <p class="cap-gold" id="outro-cap1">12. YIL DÖNÜMÜMÜZ</p>
+            <p class="cap-ivory" id="outro-cap2">KUTLU OLSUN</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="dust"></div>
+      <div id="fade-black"></div>
+
+      <audio
+        id="music"
+        src="assets/music/piyano.wav"
+        data-start="0"
+        data-duration="{{TOTAL}}"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+    </div>
+
+    <script>
+      const CFG = {{CONFIG}};
+      const O = CFG.outro;
+      const TOTAL = CFG.total;
+      const tl = gsap.timeline({ paused: true });
+
+      // ---- deterministic helpers ----
+      const prand = (n) => {
+        const x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
+        return x - Math.floor(x);
+      };
+      // lemniscate of Bernoulli, starting at the crossing and heading into the left lobe
+      const lemni = (a, t) => {
+        const s = Math.sin(t);
+        const c = Math.cos(t);
+        const d = 1 + s * s;
+        return [(a * c) / d, (a * s * c) / d];
+      };
+      const lemniPath = (a) => {
+        const pts = [];
+        for (let i = 0; i <= 480; i++) {
+          const [x, y] = lemni(a, Math.PI / 2 + (i / 480) * Math.PI * 2);
+          pts.push(`${x.toFixed(2)} ${y.toFixed(2)}`);
+        }
+        return "M" + pts.join(" L");
+      };
+      const prepDraw = (pathId, glintId, a, glintLen) => {
+        const p = document.getElementById(pathId);
+        const g = document.getElementById(glintId);
+        const d = lemniPath(a);
+        p.setAttribute("d", d);
+        g.setAttribute("d", d);
+        const L = p.getTotalLength();
+        p.style.strokeDasharray = `${L}`;
+        p.style.strokeDashoffset = `${L}`;
+        g.style.strokeDasharray = `${glintLen} ${L - glintLen}`;
+        g.style.strokeDashoffset = "0";
+        return L;
+      };
+
+      // ---- gold dust (pure function of time) ----
+      const dust = document.getElementById("dust");
+      const motes = [];
+      for (let i = 0; i < 42; i++) {
+        const el = document.createElement("div");
+        el.className = "mote";
+        const size = 3 + prand(i * 3 + 1) * 6;
+        el.style.width = `${size}px`;
+        el.style.height = `${size}px`;
+        dust.appendChild(el);
+        motes.push({
+          el,
+          x0: prand(i * 5 + 2) * 1080,
+          y0: prand(i * 7 + 3) * 2000,
+          v: 14 + prand(i * 11 + 4) * 30,
+          amp: 18 + prand(i * 13 + 5) * 40,
+          w: 0.25 + prand(i * 17 + 6) * 0.5,
+          ph: prand(i * 19 + 7) * 6.283,
+          tw: 0.8 + prand(i * 23 + 8) * 1.6,
+          base: 0.35 + prand(i * 29 + 9) * 0.6,
+        });
+      }
+
+      // ---- infinity loop of thumbnails (outro) ----
+      const A_OUT = 450;
+      const thumbs = Array.from(document.querySelectorAll(".thumb"));
+      const OMEGA = (Math.PI * 2 * 0.75) / 15; // three quarters of a loop over the outro
+      const placeThumbs = (sec) => {
+        thumbs.forEach((el, i) => {
+          const t = Math.PI / 2 + (Math.PI * 2 * (i + 0.5)) / 17 + OMEGA * sec;
+          const [x, y] = lemni(A_OUT, t);
+          el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+        });
+      };
+
+      const frame = (T) => {
+        motes.forEach((m) => {
+          const span = 2000;
+          let y = (m.y0 - m.v * T) % span;
+          if (y < 0) y += span;
+          const x = m.x0 + Math.sin(T * m.w + m.ph) * m.amp;
+          const op = m.base * (0.5 + 0.5 * Math.sin(T * m.tw + m.ph * 2));
+          m.el.style.transform = `translate(${x.toFixed(1)}px, ${(y - 40).toFixed(1)}px)`;
+          m.el.style.opacity = op.toFixed(3);
+        });
+        placeThumbs(T - O);
+      };
+      frame(0);
+      const clock = { T: 0 };
+      tl.fromTo(
+        clock,
+        { T: 0 },
+        { T: TOTAL, duration: TOTAL, ease: "none", onUpdate: () => frame(clock.T) },
+        0,
+      );
+      // dust is brighter on the dark title cards, quieter over the photos
+      tl.fromTo("#dust", { opacity: 1 }, { opacity: 0.45, duration: 1.5, ease: "sine.inOut" }, CFG.seams[0] - 0.8);
+      tl.to("#dust", { opacity: 1, duration: 1.5, ease: "sine.inOut" }, O - 0.6);
+
+      // ---- INTRO ----
+      const L_IN = prepDraw("intro-inf-path", "intro-inf-glint", 300, 46);
+      tl.fromTo("#intro-glow", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 2.4, ease: "sine.out" }, 0);
+      tl.to("#intro-glow", { scale: 1.08, duration: 3.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.4);
+      tl.to("#intro-inf-path", { strokeDashoffset: 0, duration: 2.3, ease: "power2.inOut" }, 0.45);
+      tl.fromTo("#intro-inf-glint", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "sine.out" }, 2.5);
+      tl.fromTo(
+        "#intro-inf-glint",
+        { strokeDashoffset: 0 },
+        { immediateRender: false, strokeDashoffset: -L_IN * 1.6, duration: 5.4, ease: "none" },
+        2.5,
+      );
+      tl.fromTo(
+        "#intro-names",
+        { clipPath: "inset(0% 100% 0% 0%)", opacity: 0.2, y: 14 },
+        { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, y: 0, duration: 1.6, ease: "power1.inOut" },
+        1.9,
+      );
+      tl.fromTo("#intro-rule .rule-line", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power3.out" }, 3.4);
+      tl.fromTo("#intro-rule .rule-diamond", { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, 3.45);
+      tl.fromTo(
+        "#intro-cap1",
+        { opacity: 0, scale: 1.12, y: 10 },
+        { opacity: 1, scale: 1, y: 0, duration: 1.1, ease: "expo.out" },
+        3.7,
+      );
+      tl.fromTo("#intro-cap2", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" }, 4.1);
+      tl.to(".intro-fade", { opacity: 0, scale: 1.05, duration: 1.3, ease: "sine.in" }, CFG.seams[0] - 1.1);
+      tl.to("#intro-glow", { opacity: 0, duration: 1.2, ease: "sine.in" }, CFG.seams[0] - 1.0);
+
+      // ---- PHOTOS: Ken Burns + crossfade on the downbeat ----
+      CFG.photos.forEach((p, i) => {
+        const dur = p.end - p.start;
+        tl.fromTo(
+          `#${p.id} .photo-img`,
+          { y: p.y0, scale: p.s0, transformOrigin: "50% 50%" },
+          { y: p.y1, scale: p.s1, duration: dur, ease: "none" },
+          p.start,
+        );
+        tl.fromTo(`#${p.id} .photo-fade`, { opacity: 0 }, { opacity: 1, duration: CFG.xf, ease: "sine.inOut" }, p.start);
+      });
+
+      // warm light leak across each seam
+      CFG.seams.forEach((c, i) => {
+        const leak = `#leak${String(i).padStart(2, "0")}`;
+        const dir = i % 2 === 0 ? 1 : -1;
+        tl.fromTo(
+          leak,
+          { opacity: 0, x: -220 * dir, scale: 0.9 },
+          { opacity: 0.42, x: 0, scale: 1, duration: 0.7, ease: "sine.out" },
+          c - 0.7,
+        );
+        tl.to(leak, { opacity: 0, x: 200 * dir, scale: 1.08, duration: 1.0, ease: "sine.in" }, c);
+      });
+
+      // ---- poetic lines ----
+      CFG.lines.forEach((l) => {
+        const s = `#${l.id}`;
+        tl.fromTo(`${s} .poem-shade`, { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "sine.out" }, l.start);
+        tl.fromTo(
+          `${s} .poem-text`,
+          { clipPath: "inset(0% 100% 0% 0%)", opacity: 0.3, y: 10 },
+          { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, y: 0, duration: 1.7, ease: "power1.inOut" },
+          l.start + 0.25,
+        );
+        tl.fromTo(`${s} .poem-rule`, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.9, ease: "power3.out" }, l.start + 1.5);
+        tl.to(`${s} .poem-inner`, { opacity: 0, y: -12, duration: 0.8, ease: "sine.in" }, l.end - 0.85);
+        tl.to(`${s} .poem-shade`, { opacity: 0, duration: 0.9, ease: "sine.in" }, l.end - 0.9);
+      });
+
+      // ---- OUTRO ----
+      const L_OUT = prepDraw("outro-inf-path", "outro-inf-glint", A_OUT, 60);
+      tl.fromTo(".outro-fade", { opacity: 0 }, { opacity: 1, duration: 1.4, ease: "sine.inOut" }, O - 0.5);
+      tl.fromTo("#outro-glow", { opacity: 0.4, scale: 0.9 }, { opacity: 1, scale: 1, duration: 3, ease: "sine.out" }, O);
+      tl.to("#outro-inf-path", { strokeDashoffset: 0, duration: 2.4, ease: "power2.inOut" }, O + 0.2);
+      tl.fromTo("#outro-inf-glint", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.out" }, O + 2.4);
+      tl.fromTo(
+        "#outro-inf-glint",
+        { strokeDashoffset: 0 },
+        { immediateRender: false, strokeDashoffset: -L_OUT * 2.2, duration: TOTAL - (O + 2.4), ease: "none" },
+        O + 2.4,
+      );
+      tl.fromTo(
+        ".thumb-in",
+        { opacity: 0, scale: 0.2 },
+        { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.7)", stagger: 0.11 },
+        O + 0.7,
+      );
+      tl.fromTo(
+        "#outro-names",
+        { clipPath: "inset(0% 100% 0% 0%)", opacity: 0.2, y: 14 },
+        { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, y: 0, duration: 1.6, ease: "power1.inOut" },
+        O + 2.6,
+      );
+      tl.fromTo(
+        "#outro-forever",
+        { clipPath: "inset(0% 100% 0% 0%)", opacity: 0.2, y: 14 },
+        { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, y: 0, duration: 1.7, ease: "power1.inOut" },
+        O + 3.9,
+      );
+      tl.fromTo("#outro-rule .rule-line", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power3.out" }, O + 5.4);
+      tl.fromTo("#outro-rule .rule-diamond", { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, O + 5.45);
+      tl.fromTo(
+        "#outro-cap1",
+        { opacity: 0, scale: 1.12, y: 10 },
+        { opacity: 1, scale: 1, y: 0, duration: 1.1, ease: "expo.out" },
+        O + 5.7,
+      );
+      tl.fromTo("#outro-cap2", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" }, O + 6.1);
+      // final chord bloom (bar 21)
+      tl.to("#outro-glow", { scale: 1.16, opacity: 1, duration: 2.2, ease: "sine.out" }, O + 3 * CFG.bar - 0.1);
+      tl.fromTo("#fade-black", { opacity: 0 }, { opacity: 1, duration: 2.4, ease: "sine.in" }, TOTAL - 2.5);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
